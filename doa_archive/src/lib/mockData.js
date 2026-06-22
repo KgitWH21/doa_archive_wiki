@@ -1,0 +1,117 @@
+export const mockEntries = [
+  {
+    id: '1',
+    slug: 'shade-k-haven',
+    title: 'Shade (K. Haven)',
+    entry_type: 'personnel',
+    entry_subtype: 'Field Operative',
+    classification: 'unclassified',
+    public_content:
+      'Middle brother. Primary field operative, OKI Station. Clearance: Type B Ultra. Last contact: Zamami Island. Specialization: close-quarters extraction and anomaly containment.',
+    gated_content:
+      'Full contact log. Coordinates for OKI Station safehouse network. Confirmed engagement with two Champion-class operatives at the Zamami Node perimeter. Psychological evaluation following the Cereus Event: flagged for review.',
+    is_published: true,
+    is_gated: false,
+    status: 'Active',
+    file_no: 'DOA-OPS-0001',
+    detail_fields: [
+      { label: 'DESIGNATION', value: 'K. Haven / Shade' },
+      { label: 'STATION', value: 'OKI Station, Okinawa' },
+      { label: 'CLEARANCE', value: 'Type B Ultra' },
+      { label: 'STATUS', value: 'Active', highlight: true },
+    ],
+    updated_at: '2026.06.19',
+  },
+  {
+    id: '2',
+    slug: 'higa-bonta',
+    title: 'Higa Bonta (比嘉ボンタ)',
+    entry_type: 'personnel',
+    entry_subtype: 'Civilian Asset',
+    classification: 'unclassified',
+    public_content:
+      'Uruma City native, age 15. Civilian drawn into Cereus Event. Sister Meio detained at Zamami Node. Sustained thermal burn from Champion-class operative during ferry infiltration.',
+    gated_content:
+      "Bonta's contact log with K-97 (Timeera Koi). Zamami ferry incident report including PLA uniform procurement details. Psychological evaluation: acute stress response. Meio detention status and transfer orders. Champion-class operative ID: provisional CALLSIGN WREN.",
+    is_published: true,
+    is_gated: true,
+    status: 'Active / Uncontained',
+    file_no: 'DOA-CIV-0015',
+    detail_fields: [
+      { label: 'FULL NAME', value: '比嘉ボンタ (Higa Bonta)' },
+      { label: 'AGE / LOCATION', value: '15 · Uruma City' },
+      { label: 'STATUS', value: 'Active / Uncontained', highlight: true },
+      { label: 'KNOWN CONTACT', value: 'K-97 (Timeera Koi)' },
+    ],
+    updated_at: '2026.06.19',
+  },
+  {
+    id: '3',
+    slug: 'k-97-timeera-koi',
+    title: 'K-97 (Timeera Koi)',
+    entry_type: 'personnel',
+    entry_subtype: 'Field Operative',
+    classification: 'restricted',
+    public_content:
+      'Operative codename K-97. Contact designation for civilian asset HB-015. OKI Station affiliated. Specialization unknown — public record sealed by Department order.',
+    gated_content:
+      'Timeera Koi. Age 24. Recruited from civilian track at 19 following the Naha Incident. Assigned to Bonta oversight following Cereus Event. Current location: Zamami Node perimeter, observation post 7.',
+    is_published: true,
+    is_gated: true,
+    status: 'Active',
+    file_no: 'DOA-OPS-0097',
+    detail_fields: [
+      { label: 'CODENAME', value: 'K-97' },
+      { label: 'AFFILIATION', value: 'OKI Station' },
+      { label: 'STATUS', value: 'Active', highlight: true },
+      { label: 'LINKED ASSET', value: 'HB-015 (Higa Bonta)' },
+    ],
+    updated_at: '2026.06.20',
+  },
+  {
+    id: '4',
+    slug: 'zamami-node',
+    title: 'Zamami Node',
+    entry_type: 'location',
+    entry_subtype: 'Anomaly Site',
+    classification: 'restricted',
+    public_content:
+      'Zamami Island, Okinawa Prefecture. Designated anomaly convergence site following the Cereus Event. Currently under Department quarantine. Civilian access suspended indefinitely.',
+    gated_content:
+      'Node dimensions: 400m radius from Zamami Port. Atmospheric pressure anomaly consistent with Type B Limnic event. Two Champion-class operatives confirmed on perimeter. Meio Higa (DOA-CIV-0016) detained at Node interior, transfer status unknown. Observation post grid available to cleared operatives.',
+    is_published: true,
+    is_gated: true,
+    status: 'Quarantined',
+    file_no: 'DOA-LOC-0003',
+    detail_fields: [
+      { label: 'DESIGNATION', value: 'Zamami Node' },
+      { label: 'LOCATION', value: 'Zamami Island, Okinawa' },
+      { label: 'STATUS', value: 'Quarantined', highlight: true },
+      { label: 'THREAT CLASS', value: 'Type B Limnic' },
+    ],
+    updated_at: '2026.06.21',
+  },
+  {
+    id: '5',
+    slug: 'cereus-event',
+    title: 'The Cereus Event',
+    entry_type: 'event',
+    entry_subtype: 'Classified Incident',
+    classification: 'unclassified',
+    public_content:
+      'Anomalous atmospheric event first observed at Awose Port, Okinawa, 0612 hours. Designated Type B by Department classification protocol. Multiple civilian witnesses. Official statement: industrial weather event. DOA investigation ongoing.',
+    gated_content:
+      'Pre-event seismic signatures detected 72 hours prior. Champion-class operative mobilization ordered at T-24h. Civilian Higa Bonta (HB-015) confirmed first non-Department observer. Atmospheric readings suggest non-terrestrial origin — classification upgrade to Type A under review.',
+    is_published: true,
+    is_gated: false,
+    status: 'Ongoing',
+    file_no: 'DOA-EVT-0001',
+    detail_fields: [
+      { label: 'DESIGNATION', value: 'Cereus Event' },
+      { label: 'ORIGIN POINT', value: 'Awose Port, Okinawa' },
+      { label: 'STATUS', value: 'Ongoing', highlight: true },
+      { label: 'THREAT CLASS', value: 'Type B Limnic' },
+    ],
+    updated_at: '2026.06.22',
+  },
+]

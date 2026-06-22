@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@variant dark (.dark &);
+
+@theme {
+  /* ── Colors ── */
+  --color-background: #071325;
+  --color-surface: #071325;
+  --color-surface-dim: #071325;
+  --color-surface-bright: #2e394d;
+  --color-surface-container-lowest: #030e20;
+  --color-surface-container-low: #101c2e;
+  --color-surface-container: #142032;
+  --color-surface-container-high: #1f2a3d;
+  --color-surface-container-highest: #2a3548;
+  --color-surface-variant: #2a3548;
+  --color-surface-tint: #ecc155;
+  --color-on-surface: #d7e3fc;
+  --color-on-surface-variant: #d1c5b0;
+  --color-on-background: #d7e3fc;
+  --color-inverse-surface: #d7e3fc;
+  --color-inverse-on-surface: #253144;
+  --color-outline: #9a907d;
+  --color-outline-variant: #4e4636;
+  --color-primary: #ecc155;
+  --color-on-primary: #3e2e00;
+  --color-primary-container: #b8922a;
+  --color-on-primary-container: #3d2d00;
+  --color-primary-fixed: #ffdf97;
+  --color-primary-fixed-dim: #ecc155;
+  --color-on-primary-fixed: #251a00;
+  --color-on-primary-fixed-variant: #5a4400;
+  --color-inverse-primary: #775a00;
+  --color-secondary: #b7c7eb;
+  --color-on-secondary: #21304d;
+  --color-secondary-container: #374765;
+  --color-on-secondary-container: #a6b5d9;
+  --color-secondary-fixed: #d7e2ff;
+  --color-secondary-fixed-dim: #b7c7eb;
+  --color-on-secondary-fixed: #0a1b37;
+  --color-on-secondary-fixed-variant: #374765;
+  --color-tertiary: #66d9cc;
+  --color-on-tertiary: #003732;
+  --color-tertiary-container: #29a89c;
+  --color-on-tertiary-container: #003631;
+  --color-tertiary-fixed: #84f5e8;
+  --color-tertiary-fixed-dim: #66d9cc;
+  --color-on-tertiary-fixed: #00201d;
+  --color-on-tertiary-fixed-variant: #005049;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  /* ── Font families ── */
+  --font-body-md: "Rajdhani", sans-serif;
+  --font-body-lg: "Rajdhani", sans-serif;
+  --font-headline-lg: "Rajdhani", sans-serif;
+  --font-headline-md: "Rajdhani", sans-serif;
+  --font-label-caps: "Share Tech Mono", monospace;
+  --font-label-sm: "Share Tech Mono", monospace;
+  --font-status-strip: "Share Tech Mono", monospace;
+
+  /* ── Font sizes ── */
+  --text-body-md: 16px;
+  --text-body-md--line-height: 22px;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 24px;
+  --text-headline-lg: 28px;
+  --text-headline-lg--line-height: 32px;
+  --text-headline-lg--letter-spacing: 0.02em;
+  --text-headline-md: 22px;
+  --text-headline-md--line-height: 28px;
+  --text-label-caps: 14px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.1em;
+  --text-label-sm: 12px;
+  --text-label-sm--line-height: 14px;
+  --text-status-strip: 11px;
+  --text-status-strip--line-height: 12px;
+  --text-status-strip--letter-spacing: 0.15em;
+
+  /* ── Spacing ── */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-gutter: 12px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-container-padding: 16px;
+  --spacing-hazard-height: 20px;
+
+  /* ── Border radius ── */
+  --radius: 0.125rem;
+  --radius-sm: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+}
+
+body {
+  @apply bg-background text-on-surface font-body-md;
+  min-height: 100dvh;
+}
+
+.hazard-bg {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #b8922a,
+    #b8922a 10px,
+    #071325 10px,
+    #071325 20px
+  );
+}
+
+.hazard-bg-alt {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #101c2e,
+    #101c2e 10px,
+    #b8922a 10px,
+    #b8922a 20px
+  );
+}
+
+.scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.1)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+.material-symbols-outlined.filled {
+  font-variation-settings: "FILL" 1;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #071325; }
+::-webkit-scrollbar-thumb { background: #4e4636; }
+::-webkit-scrollbar-thumb:hover { background: #b8922a; }
+
+::selection { background-color: #b8922a; color: #3d2d00; }

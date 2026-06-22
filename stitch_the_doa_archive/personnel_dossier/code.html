@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>D.O.A. ARCHIVE - Personnel Dossier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&family=Share+Tech+Mono&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@100..900&family=Share+Tech+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#b8922a",
+                        "tertiary-fixed": "#84f5e8",
+                        "surface-bright": "#2e394d",
+                        "primary-fixed-dim": "#ecc155",
+                        "outline-variant": "#4e4636",
+                        "on-background": "#d7e3fc",
+                        "on-secondary-fixed": "#0a1b37",
+                        "primary": "#ecc155",
+                        "background": "#071325",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "outline": "#9a907d",
+                        "on-tertiary-container": "#003631",
+                        "inverse-on-surface": "#253144",
+                        "secondary-fixed": "#d7e2ff",
+                        "surface-container": "#142032",
+                        "on-primary-fixed": "#251a00",
+                        "on-secondary-fixed-variant": "#374765",
+                        "tertiary-container": "#29a89c",
+                        "surface-tint": "#ecc155",
+                        "surface-container-low": "#101c2e",
+                        "on-secondary-container": "#a6b5d9",
+                        "surface-dim": "#071325",
+                        "surface-container-high": "#1f2a3d",
+                        "on-primary-container": "#3d2d00",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#ffdf97",
+                        "surface-variant": "#2a3548",
+                        "on-tertiary": "#003732",
+                        "on-tertiary-fixed": "#00201d",
+                        "surface": "#071325",
+                        "on-primary": "#3e2e00",
+                        "on-surface-variant": "#d1c5b0",
+                        "inverse-surface": "#d7e3fc",
+                        "on-error": "#690005",
+                        "on-surface": "#d7e3fc",
+                        "on-primary-fixed-variant": "#5a4400",
+                        "tertiary-fixed-dim": "#66d9cc",
+                        "inverse-primary": "#775a00",
+                        "secondary-container": "#374765",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#21304d",
+                        "surface-container-lowest": "#030e20",
+                        "tertiary": "#66d9cc",
+                        "error-container": "#93000a",
+                        "secondary": "#b7c7eb",
+                        "surface-container-highest": "#2a3548",
+                        "secondary-fixed-dim": "#b7c7eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "unit": "4px",
+                        "container-padding": "16px",
+                        "md": "16px",
+                        "gutter": "12px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "hazard-height": "20px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Rajdhani"],
+                        "status-strip": ["Share Tech Mono"],
+                        "label-caps": ["Share Tech Mono"],
+                        "headline-lg": ["Rajdhani"],
+                        "label-sm": ["Share Tech Mono"],
+                        "body-lg": ["Rajdhani"],
+                        "headline-md": ["Rajdhani"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "status-strip": ["11px", { "lineHeight": "12px", "letterSpacing": "0.15em", "fontWeight": "400" }],
+                        "label-caps": ["14px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "headline-lg": ["28px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "14px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .hazard-stripes {
+            background: repeating-linear-gradient(
+                -45deg,
+                #b8922a,
+                #b8922a 10px,
+                #142032 10px,
+                #142032 20px
+            );
+        }
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col relative scanline">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant docked full-width top-0 z-40 hidden md:flex flex-col w-full max-w-[600px] mx-auto before:content-['//_RESTRICTED_//'] before:flex before:items-center before:justify-center before:h-[20px] before:bg-primary-container before:text-on-primary-container before:text-status-strip before:font-status-strip before:w-full">
+<div class="flex items-center justify-between p-md">
+<div class="flex items-center gap-sm text-primary dark:text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="text-label-caps font-label-caps text-primary tracking-widest">D.O.A. ARCHIVE</span>
+</div>
+<div class="flex items-center gap-md">
+<nav class="flex items-center gap-md text-label-caps font-label-caps">
+<a class="text-primary font-bold opacity-80 duration-100 transition-colors" href="#">ARCHIVE</a>
+<a class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors" href="#">BOOKER</a>
+<a class="text-on-surface-variant hover:text-primary-fixed-dim transition-colors" href="#">SIGN IN</a>
+</nav>
+<span class="material-symbols-outlined text-primary dark:text-primary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+</div>
+</header>
+<!-- Mobile Top Hazard Banner (Alternative to TopAppBar for Mobile) -->
+<div class="md:hidden hazard-stripes h-[20px] w-full sticky top-0 z-30 border-b border-primary-container opacity-80"></div>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-[600px] mx-auto p-md pb-32 md:pb-md flex flex-col gap-lg">
+<!-- Header Section -->
+<section class="bg-surface-container border-b border-primary-container p-md relative">
+<div class="absolute top-md right-md">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="text-status-strip font-status-strip text-primary-container">UNCONTAINED</span>
+</div>
+</div>
+<div class="text-label-caps font-label-caps text-secondary-fixed mb-xs">// PERSONNEL FILE · CIVILIAN ASSET</div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-widest uppercase mb-1">Higa Bonta</h1>
+<div class="text-status-strip font-status-strip text-on-surface-variant">FILE NO. DOA-CIV-0015 · UPDATED: 2026.06.19</div>
+</section>
+<!-- Image / Visual ID -->
+<section class="border border-outline-variant/30 bg-surface-container relative">
+<div class="w-full h-64 bg-cover bg-center grayscale opacity-80 mix-blend-luminosity" data-alt="A gritty, lo-fi digital portrait of a 15-year-old Japanese male, Higa Bonta, against a stark, high-contrast dark intelligence agency background. The image has a low-light, modern brutalist aesthetic with subtle terminal scanning lines overlaying the frame. He wears a visibly slightly oversized, slightly scorched military jacket. A small glowing gold diagonal hazard stripe motif is visible in the lower corner of the image border." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDzRVJy-VKZCyuDtiv0sbVWar8Oi1-qhaf1fzoDlgBZoCzpVehCSMjJsUZuqQMqLOZ5lqvGKsur0OA9cUwNtUjPKSzucg7ksPgR05aK0iNu7vjx7cTLmslis2eq4a43d8WAe-wPVmTxkcI3gcV8RYUuq_0LZpEjW6E-rWBmreTsJ8VjFqeuMXPzMssdDE3KMeyOt60l1wl94sQmgQFqLK-eUjWQDsXlllrNurY3TPyBOh4dln64WkPr7PNaudRC5zzqVDdUtbgoOss')"></div>
+<div class="absolute bottom-0 left-0 w-full bg-surface-container/90 border-t border-outline-variant/50 p-2 text-status-strip font-status-strip text-secondary flex justify-between">
+<span>ID: HB-015</span>
+<span>IMG_SRC: TERMINAL_7</span>
+</div>
+</section>
+<!-- Detail Row -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+<div class="bg-surface-container p-sm border border-outline-variant/30 flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-secondary-fixed">FULL NAME</span>
+<span class="text-body-md font-body-md text-on-surface">比嘉ボンタ (Higa Bonta)</span>
+</div>
+<div class="bg-surface-container p-sm border border-outline-variant/30 flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-secondary-fixed">AGE / LOCATION</span>
+<span class="text-body-md font-body-md text-on-surface">15 · Uruma City</span>
+</div>
+<div class="bg-surface-container p-sm border border-outline-variant/30 flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-secondary-fixed">STATUS</span>
+<span class="text-body-md font-body-md text-primary">Active / Uncontained</span>
+</div>
+<div class="bg-surface-container p-sm border border-outline-variant/30 flex flex-col gap-1">
+<span class="text-label-sm font-label-sm text-secondary-fixed">KNOWN CONTACT</span>
+<span class="text-body-md font-body-md text-on-surface">K-97 (Timeera Koi)</span>
+</div>
+</section>
+<!-- Narrative Block -->
+<section class="border border-outline-variant/30 bg-surface-container relative p-md">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<h2 class="text-label-caps font-label-caps text-secondary-fixed mb-sm border-b border-outline-variant/20 pb-2">INCIDENT NARRATIVE</h2>
+<p class="text-body-md font-body-md text-on-surface leading-relaxed">
+                Higa Bonta was fishing at Awose Port on the morning of the Cereus Event when he first observed the anomalous cloud formation. He infiltrated Zamami aboard a military ferry in a stolen PLA uniform, sustaining a thermal burn from a Champion-class operative.
+            </p>
+</section>
+<!-- Gated Content Block -->
+<section class="border border-primary-container bg-surface-container p-md relative overflow-hidden">
+<div class="absolute inset-0 hazard-stripes opacity-10 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-md items-center text-center">
+<span class="material-symbols-outlined text-primary-container text-4xl" style="font-variation-settings: 'FILL' 1;">lock</span>
+<h3 class="text-headline-md font-headline-md text-primary-container tracking-widest">// CLASSIFIED — MEMBERS ONLY //</h3>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-sm">
+                    Bonta's contact log with K-97, the Zamami ferry incident report, and the fate of his sister Meio are available to archive members.
+                </p>
+<button class="bg-primary-container text-on-primary-fixed font-label-caps text-label-caps px-xl py-sm uppercase hover:bg-primary-fixed-dim transition-colors mt-2">
+                    REQUEST ACCESS
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex flex-col max-w-[600px] left-1/2 -translate-x-1/2 after:content-['//_SECURE_CONNECTION_//'] after:flex after:items-center after:justify-center after:h-[20px] after:bg-primary-container after:text-on-primary-container after:text-status-strip after:font-status-strip after:w-full border-t border-outline-variant bg-surface-container dark:bg-surface-container">
+<div class="flex justify-around items-center w-full h-[64px]">
+<a class="flex flex-col items-center justify-center text-primary border-t-2 border-primary pt-2 flex-1 h-full scale-95 duration-75" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="text-label-caps font-label-caps">ARCHIVE</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary-fixed-dim pt-2 flex-1 h-full hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined mb-1">smart_toy</span>
+<span class="text-label-caps font-label-caps">BOOKER</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary-fixed-dim pt-2 flex-1 h-full hover:bg-surface-variant transition-all" href="#">
+<span class="material-symbols-outlined mb-1">key</span>
+<span class="text-label-caps font-label-caps">SIGN IN</span>
+</a>
+</div>
+</nav>
+</body></html>
