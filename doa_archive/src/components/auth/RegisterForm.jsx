@@ -12,6 +12,7 @@ export function RegisterForm() {
   const [confirm, setConfirm] = useState('')
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [registered, setRegistered] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -27,12 +28,38 @@ export function RegisterForm() {
     setLoading(true)
     try {
       await register(email, password)
-      navigate('/')
+      setRegistered(true)
     } catch (err) {
       setError(err.message ?? 'Registration failed. Contact your DOA liaison.')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (registered) {
+    return (
+      <div className="w-full flex flex-col gap-md">
+        <div className="bg-surface-container border border-[#4CAF82]/40 p-md">
+          <p className="text-label-caps font-label-caps text-[#4CAF82] mb-xs">
+            // REGISTRATION RECEIVED
+          </p>
+          <h2 className="text-headline-lg font-headline-lg text-primary uppercase tracking-widest mb-xs">
+            CHECK YOUR EMAIL
+          </h2>
+          <p className="text-status-strip font-status-strip text-on-surface-variant">
+            A CONFIRMATION LINK HAS BEEN DISPATCHED TO {email.toUpperCase()}. VERIFY TO ACTIVATE YOUR CLEARANCE.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => navigate('/login')}
+          className="w-full bg-[#0D1E3A] border border-primary-container/30 text-primary font-label-caps text-label-caps uppercase py-4 hover:bg-[#0A1628] transition-colors flex items-center justify-center gap-2"
+        >
+          <span className="material-symbols-outlined text-[18px]">login</span>
+          PROCEED TO LOGIN
+        </button>
+      </div>
+    )
   }
 
   return (

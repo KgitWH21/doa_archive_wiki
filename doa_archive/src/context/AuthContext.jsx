@@ -1,42 +1,32 @@
 import { useState, useEffect } from 'react'
 import { AuthContext } from './authContext'
+import { supabase } from '../lib/supabase'
 
-const MOCK_USERS = {
-  member: { id: 'mock-member', email: 'operative@doa.gov', is_admin: false },
-  admin: { id: 'mock-admin', email: 'admin@doa.gov', is_admin: true },
-}
-
-// Dev console toggle: window.__DOA_USER__ = 'member' | 'admin' | null
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const desired = window.__DOA_USER__
-      if (desired === undefined) return
-      if (desired === null || desired === 'guest') {
-        setUser(null)
-      } else if (MOCK_USERS[desired]) {
-        setUser(MOCK_USERS[desired])
-      }
-    }, 500)
-    return () => clearInterval(interval)
-  }, [])
+  async function register(email, password) {
+    const { data, error } = await supabase.auth.signUp({ email, password })
+    if (error) throw error
+    return data
+  }
 
-  function login(email) {
-    const role = email.includes('admin') ? 'admin' : 'member'
-    setUser(MOCK_USERS[role])
-    return Promise.resolve({ user: MOCK_USERS[role] })
+  async function login(email, password) {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) throw error
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', data.user.id)
+      .single()
+    setUser({ ...data.user, is_admin: profile?.is_admin ?? false })
+    return data
   }
 
   function logout() {
+    // replaced in next step
     setUser(null)
     return Promise.resolve()
-  }
-
-  function register() {
-    setUser(MOCK_USERS.member)
-    return Promise.resolve({ user: MOCK_USERS.member })
   }
 
   const isMember = user !== null
