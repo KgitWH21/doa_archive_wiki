@@ -6,6 +6,7 @@ import { BookerPage } from '../pages/BookerPage'
 import { LoginPage } from '../pages/LoginPage'
 import { RegisterPage } from '../pages/RegisterPage'
 import { AdminPage } from '../pages/AdminPage'
+import { AdminEntryPage } from '../pages/AdminEntryPage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -19,6 +20,22 @@ export const router = createBrowserRouter([
     element: (
       <AdminRoute>
         <AdminPage />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: '/admin/entry/new',
+    element: (
+      <AdminRoute>
+        <AdminEntryPage />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: '/admin/entry/:id/edit',
+    element: (
+      <AdminRoute>
+        <AdminEntryPage />
       </AdminRoute>
     ),
   },

@@ -74,7 +74,7 @@ export function EntryPage() {
           </div>
 
           <div className="text-label-caps font-label-caps text-secondary-fixed mb-xs">
-            // {entry.entry_type.toUpperCase()} FILE ·{' '}
+            // {(entry.entry_type ?? 'document').toUpperCase()} FILE ·{' '}
             {entry.entry_subtype?.toUpperCase() ?? 'ARCHIVE RECORD'}
           </div>
           <h1 className="text-headline-lg font-headline-lg text-primary tracking-widest uppercase mb-1">

@@ -9,6 +9,9 @@ export function useEntries(searchQuery = '') {
   const [entries, setEntries] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [tick, setTick] = useState(0)
+
+  function refresh() { setTick((t) => t + 1) }
 
   useEffect(() => {
     let cancelled = false
@@ -41,9 +44,9 @@ export function useEntries(searchQuery = '') {
 
     fetchEntries()
     return () => { cancelled = true }
-  }, [searchQuery])
+  }, [searchQuery, tick])
 
-  return { entries, loading, error }
+  return { entries, loading, error, refresh }
 }
 
 export function useEntry(slug) {

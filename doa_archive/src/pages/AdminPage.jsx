@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 import { AppShell } from '../components/layout/AppShell'
 import { PageHeader } from '../components/layout/PageHeader'
 import { useEntries } from '../hooks/useEntries'
 
 export function AdminPage() {
-  const { entries, loading, error } = useEntries()
+  const navigate = useNavigate()
+  const { entries, loading, error, refresh } = useEntries()
 
   return (
     <AppShell>
@@ -14,7 +17,10 @@ export function AdminPage() {
       />
 
       <div className="flex justify-end mb-md">
-        <button className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-md py-sm flex items-center gap-xs hover:bg-primary-fixed-dim transition-colors">
+        <button
+          onClick={() => navigate('/admin/entry/new')}
+          className="bg-primary-container text-on-primary-container font-label-caps text-label-caps px-md py-sm flex items-center gap-xs hover:bg-primary-fixed-dim transition-colors"
+        >
           <span className="material-symbols-outlined text-[16px]">add</span>
           ADD ENTRY
         </button>
@@ -48,11 +54,21 @@ export function AdminPage() {
               </span>
             </div>
             <div className="flex items-center gap-xs flex-shrink-0">
-              <button className="border border-outline-variant/50 text-on-surface-variant font-label-caps text-label-caps px-sm py-xs hover:bg-surface-bright transition-colors flex items-center gap-xs">
+              <button
+                onClick={() => navigate(`/admin/entry/${entry.id}/edit`)}
+                className="border border-outline-variant/50 text-on-surface-variant font-label-caps text-label-caps px-sm py-xs hover:bg-surface-bright transition-colors flex items-center gap-xs"
+              >
                 <span className="material-symbols-outlined text-[14px]">edit</span>
                 EDIT
               </button>
-              <button className="border border-error/30 text-error font-label-caps text-label-caps px-sm py-xs hover:bg-error/10 transition-colors flex items-center gap-xs">
+              <button
+                onClick={async () => {
+                  if (!confirm(`Delete "${entry.title}"?`)) return
+                  await supabase.from('entries').delete().eq('id', entry.id)
+                  refresh()
+                }}
+                className="border border-error/30 text-error font-label-caps text-label-caps px-sm py-xs hover:bg-error/10 transition-colors flex items-center gap-xs"
+              >
                 <span className="material-symbols-outlined text-[14px]">delete</span>
                 DELETE
               </button>

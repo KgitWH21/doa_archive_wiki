@@ -28,7 +28,7 @@ export function EntryCard({ entry }) {
           <div className={`flex items-center gap-xs px-2 py-0.5 border rounded-sm ${colors.badge}`}>
             <div className={`w-2 h-2 rounded-full ${colors.bar}`} />
             <span className="text-[10px] font-status-strip uppercase tracking-widest">
-              {entry.classification.toUpperCase()}
+              {(entry.classification ?? 'unclassified').toUpperCase()}
             </span>
           </div>
         </div>
@@ -40,9 +40,11 @@ export function EntryCard({ entry }) {
 
         {/* Description */}
         <p className="text-body-md font-body-md text-on-surface-variant opacity-90 leading-relaxed mb-md">
-          {entry.public_content.length > 120
-            ? entry.public_content.slice(0, 120) + '...'
-            : entry.public_content}
+          {entry.public_content
+            ? entry.public_content.length > 120
+              ? entry.public_content.slice(0, 120) + '...'
+              : entry.public_content
+            : '—'}
         </p>
 
         {/* Action */}
