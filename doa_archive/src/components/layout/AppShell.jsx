@@ -32,7 +32,17 @@ export function AppShell({ children }) {
             D.O.A. ARCHIVE
           </h1>
           <div className="flex items-center gap-xs">
-            <span className="material-symbols-outlined text-primary">terminal</span>
+            <span
+              className={`material-symbols-outlined text-[14px] ${user ? 'text-[#4CAF82]' : 'text-[#E24244]'}`}
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              {user ? 'lock_open' : 'lock'}
+            </span>
+            <span
+              className={`text-status-strip font-status-strip uppercase tracking-widest ${user ? 'text-[#4CAF82]' : 'text-[#E24244]'}`}
+            >
+              {user ? 'LOGGED IN' : 'LOGGED OUT'}
+            </span>
           </div>
         </div>
 
