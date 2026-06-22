@@ -1,8 +1,10 @@
 import { AppShell } from '../components/layout/AppShell'
 import { PageHeader } from '../components/layout/PageHeader'
-import { mockEntries } from '../lib/mockData'
+import { useEntries } from '../hooks/useEntries'
 
 export function AdminPage() {
+  const { entries, loading, error } = useEntries()
+
   return (
     <AppShell>
       <PageHeader
@@ -18,8 +20,19 @@ export function AdminPage() {
         </button>
       </div>
 
+      {error && (
+        <p className="text-status-strip font-status-strip text-error uppercase mb-md">
+          ERROR: {error}
+        </p>
+      )}
+
+      {loading ? (
+        <p className="text-status-strip font-status-strip text-on-surface-variant uppercase">
+          LOADING ENTRIES...
+        </p>
+      ) : (
       <section className="flex flex-col gap-sm">
-        {mockEntries.map((entry) => (
+        {entries.map((entry) => (
           <div
             key={entry.id}
             className="bg-surface-container-low border border-outline-variant/30 p-sm flex items-center justify-between gap-md"
@@ -47,6 +60,7 @@ export function AdminPage() {
           </div>
         ))}
       </section>
+      )}
     </AppShell>
   )
 }

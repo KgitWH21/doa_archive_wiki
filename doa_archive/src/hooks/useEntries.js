@@ -1,41 +1,84 @@
 import { useState, useEffect } from 'react'
-import { mockEntries } from '../lib/mockData'
+import { supabase } from '../lib/supabase'
+
+function normalizeEntry(row) {
+  return { ...row, entry_type: row.type, public_content: row.summary }
+}
 
 export function useEntries(searchQuery = '') {
-  const [loading, setLoading] = useState(true)
   const [entries, setEntries] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    setLoading(true)
-    const timer = setTimeout(() => {
-      const filtered = searchQuery
-        ? mockEntries.filter(
-            (e) =>
-              e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              e.public_content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              e.entry_type.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-        : mockEntries
-      setEntries(filtered.filter((e) => e.is_published))
+    let cancelled = false
+
+    async function fetchEntries() {
+      setLoading(true)
+      setError(null)
+
+      let query = supabase
+        .from('entries')
+        .select('id, title, slug, type, summary, is_gated, is_published, created_at, updated_at')
+        .eq('is_published', true)
+
+      if (searchQuery.trim()) {
+        query = query.or(
+          `title.ilike.%${searchQuery}%,summary.ilike.%${searchQuery}%,type.ilike.%${searchQuery}%`
+        )
+      }
+
+      const { data, error: err } = await query
+      if (cancelled) return
+      if (err) {
+        setError(err.message)
+        setLoading(false)
+        return
+      }
+      setEntries((data ?? []).map(normalizeEntry))
       setLoading(false)
-    }, 600)
-    return () => clearTimeout(timer)
+    }
+
+    fetchEntries()
+    return () => { cancelled = true }
   }, [searchQuery])
 
-  return { entries, loading }
+  return { entries, loading, error }
 }
 
 export function useEntry(slug) {
   const [entry, setEntry] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setEntry(mockEntries.find((e) => e.slug === slug) ?? null)
+    if (!slug) return
+    let cancelled = false
+
+    async function fetchEntry() {
+      setLoading(true)
+      setError(null)
+
+      const { data, error: err } = await supabase
+        .from('entries')
+        .select('*')
+        .eq('slug', slug)
+        .eq('is_published', true)
+        .single()
+
+      if (cancelled) return
+      if (err) {
+        setError(err.message)
+        setLoading(false)
+        return
+      }
+      setEntry(data ? normalizeEntry(data) : null)
       setLoading(false)
-    }, 400)
-    return () => clearTimeout(timer)
+    }
+
+    fetchEntry()
+    return () => { cancelled = true }
   }, [slug])
 
-  return { entry, loading }
+  return { entry, loading, error }
 }
