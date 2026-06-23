@@ -6,7 +6,7 @@ const INITIAL_MESSAGE = {
   id: 'init',
   role: 'bot',
   content:
-    'BOOKER ONLINE. I am the semantic liaison for The DOA Archive. Query me by operative name, location designation, or event codename. Member access unlocks the full classified archive.',
+    'Hello and welcome to the wiki! What would you like to know about the novel? Ask away!',
   timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }),
   results: [],
 }
