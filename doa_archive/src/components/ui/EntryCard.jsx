@@ -48,10 +48,16 @@ export function EntryCard({ entry }) {
         </p>
 
         {/* Action */}
-        <div className="flex justify-end pt-sm border-t border-secondary/20">
+        <div className="flex justify-between items-center pt-sm border-t border-secondary/20">
+          {entry.is_gated && (
+            <div className="flex items-center gap-xs text-[10px] font-status-strip text-on-surface-variant uppercase tracking-widest opacity-70">
+              <span className="material-symbols-outlined text-[13px]" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+              MEMBERS ONLY
+            </div>
+          )}
           <Link
             to={ROUTES.entry(entry.slug)}
-            className="bg-surface-bright text-primary text-label-caps font-label-caps px-sm py-xs border border-primary-container/50 hover:bg-primary-container/20 hover:border-primary-container transition-colors flex items-center gap-xs uppercase"
+            className="bg-surface-bright text-primary text-label-caps font-label-caps px-sm py-xs border border-primary-container/50 hover:bg-primary-container/20 hover:border-primary-container transition-colors flex items-center gap-xs uppercase ml-auto"
           >
             READ ENTRY{' '}
             <span className="material-symbols-outlined text-[14px]">arrow_forward_ios</span>
