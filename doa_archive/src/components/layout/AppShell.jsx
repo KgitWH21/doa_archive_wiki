@@ -3,7 +3,7 @@ import { BottomNav } from './BottomNav'
 import { useAuth } from '../../hooks/useAuth'
 
 export function AppShell({ children }) {
-  const { user, logout } = useAuth()
+  const { user, logout, isAdmin } = useAuth()
 
   return (
     <div className="flex flex-col min-h-dvh items-center relative overflow-x-hidden">
@@ -69,6 +69,19 @@ export function AppShell({ children }) {
           >
             <span className="material-symbols-outlined text-[18px]">smart_toy</span> BOOKER
           </NavLink>
+          {isAdmin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                `text-label-caps font-label-caps hover:text-primary-fixed-dim transition-colors flex items-center gap-xs ${
+                  isActive ? 'text-primary font-bold opacity-80' : 'text-on-surface-variant'
+                }`
+              }
+            >
+              <span className="material-symbols-outlined text-[18px]">admin_panel_settings</span> ADMIN
+            </NavLink>
+          )}
+
           {user ? (
             <button
               onClick={logout}

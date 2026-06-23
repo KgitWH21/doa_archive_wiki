@@ -7,7 +7,7 @@ const items = [
 ]
 
 export function BottomNav() {
-  const { user, logout } = useAuth()
+  const { user, logout, isAdmin } = useAuth()
 
   return (
     <nav className="md:hidden bg-surface-container border-t border-outline-variant fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] z-50 flex flex-col">
@@ -29,6 +29,22 @@ export function BottomNav() {
             <span className="text-label-caps font-label-caps text-[10px]">{label}</span>
           </NavLink>
         ))}
+
+        {isAdmin && (
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              `flex-1 flex flex-col items-center justify-center py-2 transition-all ${
+                isActive
+                  ? 'text-primary border-t-2 border-primary'
+                  : 'text-secondary-fixed-dim hover:bg-surface-variant'
+              }`
+            }
+          >
+            <span className="material-symbols-outlined mb-xs text-[22px]">admin_panel_settings</span>
+            <span className="text-label-caps font-label-caps text-[10px]">ADMIN</span>
+          </NavLink>
+        )}
 
         {user ? (
           <button
