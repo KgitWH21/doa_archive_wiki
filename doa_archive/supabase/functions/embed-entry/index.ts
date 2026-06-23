@@ -15,27 +15,9 @@ function jsonResponse(body: unknown, status = 200) {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
-  const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-  const anonKey = Deno.env.get('SUPABASE_ANON_KEY')!
-  const openaiKey = Deno.env.get('OPENAI_API_KEY')!
-
-  const authHeader = req.headers.get('Authorization')
-  if (!authHeader) return jsonResponse({ error: 'Unauthorized' }, 401)
-
-  const userClient = createClient(supabaseUrl, anonKey, {
-    global: { headers: { Authorization: authHeader } },
-  })
-  const { data: { user }, error: authError } = await userClient.auth.getUser()
-  if (authError || !user) return jsonResponse({ error: 'Unauthorized' }, 401)
-
-  const { data: profile } = await createClient(supabaseUrl, serviceRoleKey)
-    .from('profiles')
-    .select('is_admin')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile?.is_admin) return jsonResponse({ error: 'Forbidden' }, 403)
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+  const openaiKey = Deno.env.get('OPENAI_API_KEY') ?? ''
 
   const { entry_id } = await req.json()
   if (!entry_id) return jsonResponse({ error: 'entry_id required' }, 400)
