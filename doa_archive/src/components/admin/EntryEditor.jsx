@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../hooks/useAuth'
@@ -17,6 +17,7 @@ const EMPTY_FORM = {
   gated_content: '',
   is_gated: false,
   is_published: false,
+  image_url: '',
 }
 
 function slugify(str) {
@@ -41,6 +42,7 @@ export function EntryEditor({ entry = null }) {
           gated_content: entry.gated_content ?? '',
           is_gated: entry.is_gated ?? false,
           is_published: entry.is_published ?? false,
+          image_url: entry.image_url ?? '',
         }
       : EMPTY_FORM
   )
@@ -51,6 +53,27 @@ export function EntryEditor({ entry = null }) {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const fileInputRef = useRef(null)
+
+  async function handleImageUpload(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    const ext = file.name.split('.').pop()
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+    const { error: uploadError } = await supabase.storage
+      .from('entry-images')
+      .upload(path, file, { upsert: false })
+    if (uploadError) {
+      setError(`Image upload failed: ${uploadError.message}`)
+      setUploading(false)
+      return
+    }
+    const { data: { publicUrl } } = supabase.storage.from('entry-images').getPublicUrl(path)
+    set('image_url', publicUrl)
+    setUploading(false)
+  }
 
   function set(key, value) {
     setForm((f) => ({ ...f, [key]: value }))
@@ -219,6 +242,57 @@ export function EntryEditor({ entry = null }) {
           rows={6}
           placeholder="Restricted intel — members only..."
         />
+      </div>
+
+      {/* Image */}
+      <div className="flex flex-col gap-xs">
+        <label className={labelClass}>ENTRY IMAGE</label>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
+        {form.image_url ? (
+          <div className="relative">
+            <img
+              src={form.image_url}
+              alt="Entry"
+              className="w-full h-40 object-cover border border-[#7A9CB8] grayscale opacity-80"
+            />
+            <div className="absolute top-0 right-0 flex gap-xs p-xs">
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="bg-surface-container border border-[#7A9CB8]/60 px-2 py-1 text-[11px] font-label-caps text-secondary-fixed hover:border-primary-container hover:text-primary transition-colors"
+              >
+                REPLACE
+              </button>
+              <button
+                type="button"
+                onClick={() => set('image_url', '')}
+                className="bg-surface-container border border-error/40 px-2 py-1 text-[11px] font-label-caps text-error hover:border-error transition-colors"
+              >
+                REMOVE
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className="w-full h-28 border border-dashed border-[#7A9CB8]/40 flex flex-col items-center justify-center gap-xs text-on-surface-variant hover:border-primary-container hover:text-primary transition-colors disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-[28px]">
+              {uploading ? 'hourglass_empty' : 'add_photo_alternate'}
+            </span>
+            <span className="text-[11px] font-label-caps">
+              {uploading ? 'UPLOADING...' : 'UPLOAD IMAGE'}
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Flags */}

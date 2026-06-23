@@ -89,28 +89,42 @@ export function EntryPage() {
           </div>
         </section>
 
-        {/* Image placeholder */}
+        {/* Image */}
         <section className="border border-outline-variant/30 bg-surface-container relative">
-          <div
-            className="w-full h-64 bg-surface-bright grayscale opacity-60 flex items-center justify-center"
-          >
-            <span
-              className="material-symbols-outlined text-outline-variant opacity-40"
-              style={{ fontSize: '64px', fontVariationSettings: "'FILL' 1" }}
-            >
-              {entry.entry_type === 'personnel'
-                ? 'person'
-                : entry.entry_type === 'location'
-                ? 'location_on'
-                : entry.entry_type === 'event'
-                ? 'bolt'
-                : 'description'}
-            </span>
-          </div>
-          <div className="absolute bottom-0 left-0 w-full bg-surface-container/90 border-t border-outline-variant/50 p-2 text-status-strip font-status-strip text-secondary flex justify-between">
-            <span>ID: {entry.file_no}</span>
-            <span>IMG_SRC: ARCHIVE_TERMINAL</span>
-          </div>
+          {entry.image_url ? (
+            <>
+              <img
+                src={entry.image_url}
+                alt={entry.title}
+                className="w-full h-64 object-cover grayscale opacity-80"
+              />
+              <div className="absolute bottom-0 left-0 w-full bg-surface-container/90 border-t border-outline-variant/50 p-2 text-status-strip font-status-strip text-secondary flex justify-between">
+                <span>ID: {entry.file_no}</span>
+                <span>IMG_SRC: ARCHIVE_UPLOAD</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="w-full h-64 bg-surface-bright grayscale opacity-60 flex items-center justify-center">
+                <span
+                  className="material-symbols-outlined text-outline-variant opacity-40"
+                  style={{ fontSize: '64px', fontVariationSettings: "'FILL' 1" }}
+                >
+                  {entry.entry_type === 'personnel'
+                    ? 'person'
+                    : entry.entry_type === 'location'
+                    ? 'location_on'
+                    : entry.entry_type === 'event'
+                    ? 'bolt'
+                    : 'description'}
+                </span>
+              </div>
+              <div className="absolute bottom-0 left-0 w-full bg-surface-container/90 border-t border-outline-variant/50 p-2 text-status-strip font-status-strip text-secondary flex justify-between">
+                <span>ID: {entry.file_no}</span>
+                <span>IMG_SRC: NO_IMAGE_ON_FILE</span>
+              </div>
+            </>
+          )}
         </section>
 
         {/* Detail grid */}
