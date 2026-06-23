@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
       },
     ],
     mode: 'payment',
-    success_url: `${siteUrl}/?payment=success`,
+    success_url: `${siteUrl}/payment/success`,
     cancel_url: `${siteUrl}/`,
     payment_intent_data: {
       metadata: { user_id: user.id },

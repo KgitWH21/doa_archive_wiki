@@ -8,6 +8,7 @@ import { RegisterPage } from '../pages/RegisterPage'
 import { AdminPage } from '../pages/AdminPage'
 import { AdminEntryPage } from '../pages/AdminEntryPage'
 import { NotFoundPage } from '../pages/NotFoundPage'
+import { PaymentSuccessPage } from '../pages/PaymentSuccessPage'
 
 export const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
@@ -39,5 +40,6 @@ export const router = createBrowserRouter([
       </AdminRoute>
     ),
   },
+  { path: '/payment/success', element: <PaymentSuccessPage /> },
   { path: '*', element: <NotFoundPage /> },
 ])

@@ -31,8 +31,9 @@ export function GateBlock({ message }) {
           // CLASSIFIED — MEMBERS ONLY //
         </h3>
         <p className="text-body-md font-body-md text-on-surface-variant max-w-96">
-          {message ??
-            'This content is restricted to archive members. Register or sign in to access classified records.'}
+          {user
+            ? (message ?? 'Classified sections are restricted to archive members. A one-time $1 payment unlocks full access to every record in the archive.')
+            : 'This record is restricted to archive members. Unlock full access for $1 — sign in to continue.'}
         </p>
         {user ? (
           <button
@@ -47,7 +48,7 @@ export function GateBlock({ message }) {
             to="/login"
             className="bg-primary-container text-on-primary-fixed font-label-caps text-label-caps px-xl py-sm uppercase hover:bg-primary-fixed-dim transition-colors mt-2"
           >
-            REQUEST ACCESS
+            SIGN IN TO UNLOCK
           </Link>
         )}
       </div>

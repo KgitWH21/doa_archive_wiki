@@ -22,7 +22,7 @@ export function useEntries(searchQuery = '') {
 
       let query = supabase
         .from('entries')
-        .select('id, title, slug, type, summary, is_gated, is_published, created_at, updated_at')
+        .select('id, title, slug, type, classification, summary, is_gated, is_published, created_at, updated_at')
         .eq('is_published', true)
 
       if (searchQuery.trim()) {

@@ -1,23 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { AppShell } from '../components/layout/AppShell'
 import { PageHeader } from '../components/layout/PageHeader'
 import { EntryCard } from '../components/ui/EntryCard'
 import { SkeletonCard } from '../components/ui/SkeletonCard'
 import { useEntries } from '../hooks/useEntries'
-import { useAuth } from '../hooks/useAuth'
 
 export function HomePage() {
   const [query, setQuery] = useState('')
   const { entries, loading } = useEntries(query)
-  const { refreshProfile } = useAuth()
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('payment') === 'success') {
-      refreshProfile()
-      window.history.replaceState({}, '', '/')
-    }
-  }, [])
 
   return (
     <AppShell>
