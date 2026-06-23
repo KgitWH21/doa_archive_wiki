@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd doa_archive && npm install && npm run build",
+  "outputDirectory": "doa_archive/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
