@@ -1,10 +1,13 @@
 import bookerImg from '../assets/booker_capybara.png'
 import { BookerChat } from '../components/booker/BookerChat'
 import { BookerInput } from '../components/booker/BookerInput'
+import { BottomNav } from '../components/layout/BottomNav'
 import { useBooker } from '../hooks/useBooker'
+import { useAuth } from '../hooks/useAuth'
 
 export function BookerPage() {
   const { messages, sendMessage, isLoading } = useBooker()
+  const { user } = useAuth()
 
   return (
     <div className="flex flex-col h-dvh items-center bg-background overflow-hidden relative">
@@ -29,7 +32,17 @@ export function BookerPage() {
             <span className="text-label-caps font-label-caps text-primary tracking-widest">
               D.O.A. ARCHIVE
             </span>
-            <span className="material-symbols-outlined text-primary">terminal</span>
+            <div className="flex items-center gap-xs">
+              <span
+                className={`material-symbols-outlined text-[14px] ${user ? 'text-[#4CAF82]' : 'text-[#E24244]'}`}
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                {user ? 'lock_open' : 'lock'}
+              </span>
+              <span className={`text-status-strip font-status-strip uppercase tracking-widest ${user ? 'text-[#4CAF82]' : 'text-[#E24244]'}`}>
+                {user ? 'LOGGED IN' : 'LOGGED OUT'}
+              </span>
+            </div>
           </div>
         </header>
 
@@ -42,9 +55,6 @@ export function BookerPage() {
             style={{ boxShadow: '0 0 15px rgba(184,146,42,0.2)' }}
           />
           <div>
-            <p className="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">
-              DOA ARCHIVE · AI LIAISON
-            </p>
             <h2 className="text-headline-md font-headline-md text-primary uppercase tracking-widest">
               BOOKER
             </h2>
@@ -64,44 +74,7 @@ export function BookerPage() {
         <BookerInput onSend={sendMessage} disabled={isLoading} />
 
         {/* Mobile bottom nav */}
-        <nav className="md:hidden bg-surface-container border-t border-outline-variant flex flex-col w-full flex-shrink-0">
-          <div className="flex w-full">
-            {[
-              { to: '/', label: 'ARCHIVE', icon: 'inventory_2' },
-              { label: 'BOOKER', icon: 'smart_toy', active: true },
-              { to: '/login', label: 'SIGN IN', icon: 'key' },
-            ].map((item, i) =>
-              item.to ? (
-                <a
-                  key={i}
-                  href={item.to}
-                  className="flex-1 flex flex-col items-center justify-center py-2 text-secondary-fixed-dim hover:bg-surface-variant transition-all"
-                >
-                  <span className="material-symbols-outlined text-[22px] mb-xs">{item.icon}</span>
-                  <span className="text-label-caps font-label-caps text-[10px]">{item.label}</span>
-                </a>
-              ) : (
-                <div
-                  key={i}
-                  className="flex-1 flex flex-col items-center justify-center py-2 text-primary border-t-2 border-primary bg-surface-variant/20"
-                >
-                  <span
-                    className="material-symbols-outlined text-[22px] mb-xs"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    {item.icon}
-                  </span>
-                  <span className="text-label-caps font-label-caps text-[10px]">{item.label}</span>
-                </div>
-              )
-            )}
-          </div>
-          <div className="h-hazard-height bg-primary-container flex items-center justify-center">
-            <span className="text-status-strip font-status-strip text-on-primary-container">
-              //_SECURE_CONNECTION_//
-            </span>
-          </div>
-        </nav>
+        <BottomNav />
       </div>
     </div>
   )
