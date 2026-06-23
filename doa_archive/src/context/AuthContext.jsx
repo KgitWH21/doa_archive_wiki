@@ -6,10 +6,10 @@ async function fetchUserWithProfile(authUser) {
   if (!authUser) return null
   const { data: profile } = await supabase
     .from('profiles')
-    .select('is_admin')
+    .select('is_admin, is_member')
     .eq('id', authUser.id)
     .single()
-  return { ...authUser, is_admin: profile?.is_admin ?? false }
+  return { ...authUser, is_admin: profile?.is_admin ?? false, is_member: profile?.is_member ?? false }
 }
 
 export function AuthProvider({ children }) {
@@ -46,11 +46,16 @@ export function AuthProvider({ children }) {
     if (error) throw error
   }
 
-  const isMember = user !== null
+  async function refreshProfile() {
+    const { data: { session } } = await supabase.auth.getSession()
+    setUser(await fetchUserWithProfile(session?.user ?? null))
+  }
+
+  const isMember = user?.is_member === true || user?.is_admin === true
   const isAdmin = user?.is_admin === true
 
   return (
-    <AuthContext.Provider value={{ user, isMember, isAdmin, loading, login, logout, register }}>
+    <AuthContext.Provider value={{ user, isMember, isAdmin, loading, login, logout, register, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   )
