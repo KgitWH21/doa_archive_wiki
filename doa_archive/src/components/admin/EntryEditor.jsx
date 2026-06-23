@@ -87,13 +87,18 @@ export function EntryEditor({ entry = null }) {
     if (isEditing) {
       result = await supabase.from('entries').update(payload).eq('id', entry.id)
     } else {
-      result = await supabase.from('entries').insert({ ...payload, created_by: user.id })
+      result = await supabase.from('entries').insert({ ...payload, created_by: user.id }).select('id').single()
     }
 
     if (result.error) {
       setError(result.error.message)
       setLoading(false)
       return
+    }
+
+    const savedId = isEditing ? entry.id : result.data?.id
+    if (savedId) {
+      supabase.functions.invoke('embed-entry', { body: { entry_id: savedId } }).catch(() => {})
     }
 
     navigate('/admin')
