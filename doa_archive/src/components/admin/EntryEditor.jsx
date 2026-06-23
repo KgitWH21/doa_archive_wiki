@@ -97,11 +97,15 @@ export function EntryEditor({ entry = null }) {
     }
 
     const savedId = isEditing ? entry.id : result.data?.id
+    console.log('[embed] savedId:', savedId)
     if (savedId) {
-      const { error: embedError } = await supabase.functions.invoke('embed-entry', {
+      console.log('[embed] invoking embed-entry...')
+      const { data: embedData, error: embedError } = await supabase.functions.invoke('embed-entry', {
         body: { entry_id: savedId },
       })
-      if (embedError) console.warn('embed-entry failed:', embedError)
+      console.log('[embed] result:', embedData, embedError)
+    } else {
+      console.warn('[embed] no savedId — skipping')
     }
 
     navigate('/admin')
