@@ -4,6 +4,7 @@ import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../hooks/useAuth'
 import { ENTRY_TYPES, CLASSIFICATION_LEVELS } from '../../lib/constants'
 import { AlertBar } from '../ui/AlertBar'
+import { MarkdownEditor } from '../ui/MarkdownEditor'
 
 const EMPTY_FORM = {
   title: '',
@@ -201,24 +202,22 @@ export function EntryEditor({ entry = null }) {
       {/* Summary */}
       <div className="flex flex-col gap-xs">
         <label className={labelClass}>SUMMARY (PUBLIC)</label>
-        <textarea
+        <MarkdownEditor
           value={form.summary}
-          onChange={(e) => set('summary', e.target.value)}
-          rows={4}
+          onChange={(val) => set('summary', val)}
+          rows={6}
           placeholder="Public-facing narrative..."
-          className={inputClass}
         />
       </div>
 
       {/* Gated content */}
       <div className="flex flex-col gap-xs">
         <label className={labelClass}>CLASSIFIED CONTENT (MEMBERS ONLY)</label>
-        <textarea
+        <MarkdownEditor
           value={form.gated_content}
-          onChange={(e) => set('gated_content', e.target.value)}
-          rows={4}
+          onChange={(val) => set('gated_content', val)}
+          rows={6}
           placeholder="Restricted intel — members only..."
-          className={inputClass}
         />
       </div>
 

@@ -1,4 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { AppShell } from '../components/layout/AppShell'
 import { GateBlock } from '../components/ui/GateBlock'
 import { Badge } from '../components/ui/Badge'
@@ -138,9 +140,9 @@ export function EntryPage() {
           <h2 className="text-label-caps font-label-caps text-secondary-fixed mb-sm border-b border-outline-variant/20 pb-2">
             {entry.entry_type === 'event' ? 'EVENT REPORT' : 'INCIDENT NARRATIVE'}
           </h2>
-          <p className="text-body-md font-body-md text-on-surface leading-relaxed">
-            {entry.public_content}
-          </p>
+          <div className="prose-wiki">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.public_content ?? ''}</ReactMarkdown>
+          </div>
         </section>
 
         {/* Gated content */}
@@ -160,9 +162,9 @@ export function EntryPage() {
                 CLASSIFIED INTEL — MEMBER ACCESS
               </h2>
             </div>
-            <p className="text-body-md font-body-md text-on-surface leading-relaxed">
-              {entry.gated_content}
-            </p>
+            <div className="prose-wiki">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.gated_content ?? ''}</ReactMarkdown>
+            </div>
           </section>
         ) : null}
       </div>
