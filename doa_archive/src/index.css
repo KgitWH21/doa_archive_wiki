@@ -146,6 +146,16 @@ body {
   font-variation-settings: "FILL" 1;
 }
 
+@keyframes doa-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.18); opacity: 0.5; }
+}
+
+@keyframes doa-seal-breathe {
+  0%, 100% { box-shadow: 0 0 18px rgba(236,193,85,0.3); }
+  50% { box-shadow: 0 0 42px rgba(236,193,85,0.65); }
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #071325; }
 ::-webkit-scrollbar-thumb { background: #4e4636; }
