@@ -1,14 +1,36 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AppShell } from '../components/layout/AppShell'
 import { useAuth } from '../hooks/useAuth'
 
 export function PaymentSuccessPage() {
-  const { refreshProfile, loading } = useAuth()
+  const { refreshProfile, isMember, loading } = useAuth()
+  const [syncing, setSyncing] = useState(true)
 
   useEffect(() => {
-    if (!loading) refreshProfile()
+    if (loading) return
+
+    let mounted = true
+    let attempts = 0
+
+    async function tryRefresh() {
+      if (!mounted) return
+      await refreshProfile()
+      attempts++
+      if (attempts < 10 && mounted) {
+        setTimeout(tryRefresh, 2000)
+      } else {
+        setSyncing(false)
+      }
+    }
+
+    tryRefresh()
+    return () => { mounted = false }
   }, [loading])
+
+  useEffect(() => {
+    if (isMember) setSyncing(false)
+  }, [isMember])
 
   return (
     <AppShell>
@@ -59,12 +81,19 @@ export function PaymentSuccessPage() {
         </section>
 
         {/* CTA */}
-        <Link
-          to="/"
-          className="bg-primary-container text-on-primary-fixed font-label-caps text-label-caps px-xl py-sm uppercase hover:bg-primary-fixed-dim transition-colors text-center mt-sm"
-        >
-          ENTER THE ARCHIVE
-        </Link>
+        {syncing ? (
+          <div className="bg-surface-container border border-primary-container/30 font-label-caps text-label-caps px-xl py-sm uppercase text-center mt-sm text-on-surface-variant flex items-center justify-center gap-sm">
+            <span className="material-symbols-outlined text-[16px] animate-spin">refresh</span>
+            SYNCING ACCESS...
+          </div>
+        ) : (
+          <Link
+            to="/"
+            className="bg-primary-container text-on-primary-fixed font-label-caps text-label-caps px-xl py-sm uppercase hover:bg-primary-fixed-dim transition-colors text-center mt-sm"
+          >
+            ENTER THE ARCHIVE
+          </Link>
+        )}
 
       </div>
     </AppShell>
