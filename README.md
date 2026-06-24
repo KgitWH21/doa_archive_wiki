@@ -10,7 +10,7 @@ A classified intelligence portal for a military sci-fi novel — built as a full
 
 - **Role-based access** — three tiers: Guest, Member, and Admin, enforced at both the UI and the database layer via Supabase Row-Level Security
 - **Gated content** — each wiki entry has a public summary and a classified section; guests see a lock screen, members see everything
-- **Booker AI** — an in-world AI liaison (Claude) whose response depth changes based on your clearance level; semantic search via OpenAI embeddings with keyword fallback
+- **Booker AI** — an in-world AI enhanced whose response depth changes based on your clearance level; semantic search via OpenAI embeddings with keyword fallback
 - **Stripe membership** — one-time $1 payment upgrades a Guest to Member; handled via Supabase Edge Functions and a Stripe webhook
 - **Admin CRUD** — admins can create, edit, and publish entries with image uploads via Supabase Storage
 - **Cold-start UX** — animated "INITIALIZING SECURE CHANNEL" loading screen while the Supabase free-tier instance wakes
@@ -86,7 +86,7 @@ Each `entries` row has `public_content`, `gated_content`, and `is_gated: boolean
 
 ### Booker AI
 
-Booker is a Supabase Edge Function (`booker-search`) that calls the Anthropic Claude API for conversational responses. Semantic search is powered by OpenAI embeddings — when an entry is published, an `embed-entry` Edge Function generates a vector embedding via the OpenAI Embeddings API and stores it in the database. At query time, the function performs a vector similarity search against those embeddings; if none are populated it falls back to keyword search. The `isMember` flag is passed in the request body, and the Claude system prompt varies by clearance level so response depth differs between guests and members.
+Booker is the wiki guide. User can query him to surface entries. Semantic search is powered by OpenAI embeddings. When an entry is published, an `embed-entry` Edge Function generates a vector embedding via the OpenAI Embeddings API and stores it in the database. At query time, the function performs a vector similarity search against those embeddings; if none are populated it falls back to keyword search. The `isMember` flag is passed in the request body, and the Claude system prompt varies by clearance level so response depth differs between guests and members.
 
 ### Stripe Payment Flow
 
@@ -108,11 +108,10 @@ payments       — user_id, amount, stripe_payment_intent_id, status
 
 ## Key Design Decisions
 
-- **No backend server** — Supabase Edge Functions handle all server-side logic (auth verification, Stripe, Claude). The Anthropic API key is exposed via `VITE_ANTHROPIC_API_KEY` as an intentional trade-off for this project stage.
+- **No backend server** — Supabase Edge Functions handle all server-side logic (auth verification, Stripe, Claude). 
 - **RLS over UI gating** — gated content is protected at the database query level, not just hidden in React. A user inspecting API responses won't see `gated_content` without a valid session.
 - **Mobile-first terminal aesthetic** — max content width is 600px, maintaining a "mobile terminal" aspect ratio on wide screens. All UI chrome uses `Share Tech Mono` (uppercase, expanded tracking); narrative body text uses `Rajdhani`. No box shadows — depth is communicated through border weight and tonal layering only.
 
-## Future Work
+## Future Implementation
 
-- Automate embedding generation on entry publish so Booker's semantic search is always live
 - Add a service worker + web manifest for PWA / installable app support
