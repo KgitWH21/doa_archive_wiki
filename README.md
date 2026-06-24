@@ -10,7 +10,7 @@ A classified intelligence portal for a military sci-fi novel — built as a full
 
 - **Role-based access** — three tiers: Guest, Member, and Admin, enforced at both the UI and the database layer via Supabase Row-Level Security
 - **Gated content** — each wiki entry has a public summary and a classified section; guests see a lock screen, members see everything
-- **Booker AI** — an in-world AI liaison (Claude) whose response depth changes based on your clearance level; semantic search via embeddings with keyword fallback
+- **Booker AI** — an in-world AI liaison (Claude) whose response depth changes based on your clearance level; semantic search via OpenAI embeddings with keyword fallback
 - **Stripe membership** — one-time $1 payment upgrades a Guest to Member; handled via Supabase Edge Functions and a Stripe webhook
 - **Admin CRUD** — admins can create, edit, and publish entries with image uploads via Supabase Storage
 - **Cold-start UX** — animated "INITIALIZING SECURE CHANNEL" loading screen while the Supabase free-tier instance wakes
@@ -23,7 +23,8 @@ A classified intelligence portal for a military sci-fi novel — built as a full
 | Routing | React Router v6 |
 | Styling | Tailwind CSS v4 + custom design tokens |
 | Backend / Auth / DB | Supabase (PostgreSQL + Auth + Storage + Edge Functions) |
-| AI | Anthropic Claude API (via Supabase Edge Function) |
+| AI (chat) | Anthropic Claude API (via Supabase Edge Function) |
+| AI (embeddings) | OpenAI Embeddings API |
 | Payments | Stripe Checkout + Stripe Webhooks |
 | Hosting | Vercel |
 
@@ -85,7 +86,7 @@ Each `entries` row has `public_content`, `gated_content`, and `is_gated: boolean
 
 ### Booker AI
 
-Booker is a Supabase Edge Function (`booker-search`) that calls the Anthropic Claude API. The function first attempts semantic search using stored embeddings; if embeddings aren't populated it falls back to keyword search against the entries table. The `isMember` flag is passed in the request body, and the system prompt varies by clearance level so the actual Claude response differs between guests and members.
+Booker is a Supabase Edge Function (`booker-search`) that calls the Anthropic Claude API for conversational responses. Semantic search is powered by OpenAI embeddings — when an entry is published, an `embed-entry` Edge Function generates a vector embedding via the OpenAI Embeddings API and stores it in the database. At query time, the function performs a vector similarity search against those embeddings; if none are populated it falls back to keyword search. The `isMember` flag is passed in the request body, and the Claude system prompt varies by clearance level so response depth differs between guests and members.
 
 ### Stripe Payment Flow
 
