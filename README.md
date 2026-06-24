@@ -23,7 +23,6 @@ A classified intelligence portal for a military sci-fi novel — built as a full
 | Routing | React Router v6 |
 | Styling | Tailwind CSS v4 + custom design tokens |
 | Backend / Auth / DB | Supabase (PostgreSQL + Auth + Storage + Edge Functions) |
-| AI (chat) | Anthropic Claude API (via Supabase Edge Function) |
 | AI (embeddings) | OpenAI Embeddings API |
 | Payments | Stripe Checkout + Stripe Webhooks |
 | Hosting | Vercel |
@@ -35,7 +34,7 @@ A classified intelligence portal for a military sci-fi novel — built as a full
 - Node.js 18+
 - A Supabase project
 - A Stripe account (for payment features)
-- An Anthropic API key (for Booker)
+- An OpenAI API key (for entry embeddings)
 
 ### Setup
 
@@ -51,7 +50,6 @@ npm install
 ```
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
-VITE_ANTHROPIC_API_KEY=
 ```
 
 3. Start the dev server:
@@ -84,7 +82,7 @@ Role flags live in the `profiles` table (which extends Supabase's `auth.users`).
 
 Each `entries` row has `public_content`, `gated_content`, and `is_gated: boolean`. Supabase RLS policies prevent `gated_content` from being returned to unauthenticated requests — the UI lock screen is UX on top of real data enforcement, not the only layer of protection.
 
-### Booker AI
+### Booker for Wiki Search
 
 Booker is the wiki guide. User can query him to surface entries. Semantic search is powered by OpenAI embeddings. When an entry is published, an `embed-entry` Edge Function generates a vector embedding via the OpenAI Embeddings API and stores it in the database. At query time, the function performs a vector similarity search against those embeddings; if none are populated it falls back to keyword search. The `isMember` flag is passed in the request body, and the Claude system prompt varies by clearance level so response depth differs between guests and members.
 
